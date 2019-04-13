@@ -1,6 +1,5 @@
 from openpyxl import Workbook
 
-
 wb = Workbook()
 # grab the active worksheet
 ws = wb.active
@@ -10,7 +9,7 @@ ws = wb.active
 ws1 = wb.create_sheet("Mysheet")
 
 # or insert at first position
-ws2 = wb.create_sheet("Mysheet1",1)
+ws2 = wb.create_sheet("Mysheet1", 1)
 
 # 工作表创建时会自动为其命名(Sheet,Sheet1,...),可以通过 Worksheet.title属性更改工作表名称
 ws.title = "new Title"
@@ -34,25 +33,26 @@ target = wb.copy_worksheet(source)
 
 # Data can be assinged directly to cells
 # 数据可以直接分配给单元格
-ws ['A1'] = 42
+ws['A1'] = 42
 
 # Rows can also be appended
 # 也可以通过 append 的方式进行整行赋值
-ws.append([1,2,3])
+ws.append([1, 2, 3])
 
 # Worksheet.cell()方法：
 # 使用行和列表示法提供对单元格的访问：
 d = ws1.cell(row=4, column=2, value=10)  # 设置第4行第2列单元格的值为10
 
 # 可以使用切片访问单元格范围：
-ws1['A1']='aa'
-ws1['B2']='bb'
+ws1['A1'] = 'aa'
+ws1['B2'] = 'bb'
 cell_range = ws1['A1':'C2']
 print(cell_range)
 
 # Python types will automatically be converted
 # Python 的数据类型可以被自动转换
 import datetime
+
 ws['A2'] = datetime.datetime.now()
 print(datetime.datetime.now())
 
