@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+        }
+        .container{
+            width: 600px;
+            height: 600px;
+            border: 1px solid #ccc;
+            margin:0 auto;
+        }
+        .container .block{
+            width:30px;
+            height:30px;
+            background-color: #abcdef;
+            float: left;
+            border:1px solid #fff;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .container .lei{
+
+        }
+        .container .show{
+            background: url("th.jpg") no-repeat center center / 100% 100%;
+
+        }
+        .container .number{
+            background-color: green;
+            text-align: center;
+            line-height: 30px; 
+        }
+        .container .danger{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <!-- 表示每个小格子 -->
+        <!-- <div class="block"></div> -->
+    </div>
+
+</body>
+<script>
+    // 动态创建表格
+    
+    let container = document.querySelector(".container");
+
+    // 行数
+    for (let i = 0;i<20;i++){
+        // 列数
+        for (let j = 0;j<20;j++){
+            //创建div对象
+            let divObj = document.createElement("div");
+            // 添加类
+            divObj.classList.add("block");
+            // 标注格子的行列数，用于计算周边的雷的数量
+            divObj.id = "a"+i+"_"+j;
+            //divObj.classList.add("lei");
+            // console.log(divObj)
+            // 将div对象追加到容器中
+            container.appendChild(divObj);
+
+        }
+    }
+
+    //2.随机地雷
+    let count = 60;
+
+    // 获取所有盒字的个数
+    let block = document.querySelectorAll(".block");
+    do{
+        let random = Math.floor(Math.random()*block.length);
+        block[random].classList.add("lei");
+    }while(document.querySelectorAll(".lei").length<count);
+    
+    //b绑定事件
+    block.forEach(function (item) {
+        // 鼠标点击
+        item.onclick=function(){
+            //定义一个左键的方法
+            leftClick(item);
+
+        }
+        // 鼠标右键标记
+        item.oncontextmenu = function(e){
+            // 阻止浏览器的默认事件
+            e.preventDefault();
+            rightClick(item);
+        }
+    })
+
+    // 左键执行方法
+    function leftClick(obj){
+        // 判断所点击的表格是否有雷
+        //如果是地雷，爆炸所有的地雷
+        if (obj.classList.contains("lei")){
+
+            // 获取所有的地雷
+            let lei = document.querySelectorAll(".lei");
+            //显示所有的地雷
+            lei.forEach(function(item){
+                item.classList.add("show");
+
+            });
+            alert("游戏结束！");
+            return ""
+        };
+
+        // 点击显示数字
+        obj.classList.add("number");
+        // 计算雷的个数
+        // 获取当前点击的盒子的id
+        let ids = obj.id;
+        let arr = ids.split("_");
+        //console.log(ids);
+        // 获取行号和列号
+        let x = Number(arr[0].substr(1));
+        let y = Number(arr[1]);
+        // 计算附近的雷数
+        let num = 0;
+        for(let i=x-1;i<=x+1;i++){
+            for(let j=y-1;j<=y+1;j++){
+             //   console.log(i,j)
+                let objs = document.querySelector("#"+"a"+i+"_"+j);
+                console.log(objs);
+                if(objs && objs.classList.contains("lei")){
+                    num ++;
+                };
+            };
+        };
+        obj.innerHTML = num;
+    }
+
+    // 右键的方法
+    function rightClick(objr){
+        objr.classList.add("danger");
+    }
+</script>
+</html>
