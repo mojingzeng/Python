@@ -24,21 +24,26 @@
 
   - **chmod**：可以修改 用户/组 对文件/目录的权限
 
-       - 格式：
+    - 格式：
 
-            1. ```bash
-               chmod +/- rwx 文件名|目录名
-               ```
+         1. ```bash
+            chmod +/- rwx 文件名|目录名
+            ```
 
-            2. ```bash
-               chmod -rw filename
-               ```
+         2. ```bash
+            chmod -rw filename
+            ```
 
     - 修改文件的权限：
 
         - `chown` : 修改文件的拥有者
         - `chgrp` : 修改文件的组
         - `chmod` : 修改权限
+
+- 给普通用户赋予**sudo权限**：
+
+     - #visudo    ： 使用 vi 编辑 /etc/sudoers 文件
+     - 在 root    ALL=(ALL)    ALL  下添加用户名后保存退出即可
 
  #### 组：
 
